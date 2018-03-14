@@ -7,8 +7,8 @@ services:
     applications:
       image: tianon/true
       volumes:
-        - ../:/var/www/laravel
-        - ../FavSearch:/var/www/laravel
+        # - ../:/var/www/laravel
+        - ../Scraping:/var/www/laravel
 
 ### Workspace Utilities Container ###########################
 
