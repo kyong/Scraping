@@ -72,6 +72,9 @@ class CrawlerCommand extends Command
             $url = $node->filter('a')->attr("href");
             dump($url);
             $page = \Goutte::request('GET', $url.'info.html');
+            $etc = $page->filter('.dvFree')->each(function($div){
+                return $div->html();
+            });
             $shop = $page->filter('#CentInfoPage1 th')->each(function($th){
                 $ret = [];
                 if( trim($th->text()) === '会社名（商号）' ){
@@ -112,7 +115,7 @@ class CrawlerCommand extends Command
                 }
 
             });
-            return $this->toArray( $shop );
+            return $this->toArray( $shop, $etc );
         });
         $shop_a = array_merge( $shop_a, $ret_a );
         $next = $crawler->filter('.elNext a');
@@ -123,7 +126,7 @@ class CrawlerCommand extends Command
         }
     }
 
-    private function toArray( $shop )
+    private function toArray( $shop, $etc )
     {
         $array = [];
         if($shop){
@@ -138,6 +141,7 @@ class CrawlerCommand extends Command
                 'お問い合わせファックス番号' => null,
                 'お問い合わせメールアドレス' => null,
                 'ストア営業日' => null,
+                '備考' => implode($etc),
             ];
         }
         foreach( $shop as $s ){
