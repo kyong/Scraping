@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\CrawlerCommand::class,
         Commands\CsvCommand::class,
+        Commands\SendSns::class,
     ];
 
     /**

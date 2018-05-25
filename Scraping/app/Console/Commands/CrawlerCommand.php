@@ -70,7 +70,7 @@ class CrawlerCommand extends Command
         $crawler = \Goutte::request('GET', $url);
         $ret_a = $crawler->filter('.elItem li .elMain')->each(function ($node) {
             $url = $node->filter('a')->attr("href");
-            dump($url);
+            echo ".";
             $page = \Goutte::request('GET', $url.'info.html');
             $etc = $page->filter('.dvFree')->each(function($div){
                 return $div->html();
